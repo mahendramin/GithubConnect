@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GithubConnect</string>
+    <string name="contentdescription_user_avatar">User Avatar</string>
 </resources>
