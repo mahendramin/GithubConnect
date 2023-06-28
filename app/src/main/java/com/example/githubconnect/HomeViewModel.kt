@@ -15,6 +15,9 @@ class HomeViewModel : ViewModel() {
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private var _isSearchResultEmpty = MutableLiveData<Boolean>()
+    val isSearchResultEmpty: LiveData<Boolean> = _isSearchResultEmpty
+
     fun searchUser(username: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().searchUser(username)
@@ -26,7 +29,10 @@ class HomeViewModel : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     response.body()?.totalCount?.let {
-                        if (it > 0) _searchResult.value = response.body()?.items
+                        if (it > 0) {
+                            _searchResult.value = response.body()?.items
+                            _isSearchResultEmpty.value = false
+                        } else _isSearchResultEmpty.value = true
                     }
                 } else {
                     Log.e(TAG, "onResponse: ${response.message()}")

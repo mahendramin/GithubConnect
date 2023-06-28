@@ -54,6 +54,10 @@ class HomeFragment : Fragment() {
         homeViewModel.searchResult.observe(viewLifecycleOwner) {
             setupRecyclerView(it)
         }
+
+        homeViewModel.isSearchResultEmpty.observe(viewLifecycleOwner) {
+            isSearchResultEmpty(it)
+        }
     }
 
     private fun setupRecyclerView(searchResult: List<ItemsItem>) {
@@ -68,6 +72,19 @@ class HomeFragment : Fragment() {
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.rvSearch.visibility = if (isLoading) View.GONE else View.VISIBLE
+    }
+
+    private fun isSearchResultEmpty(isEmpty: Boolean) {
+        binding.rvSearch.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        if (isEmpty) {
+            Snackbar.make(
+                binding.root,
+                resources.getString(R.string.search_not_found, binding.searchBar.text.toString()),
+                Snackbar.LENGTH_SHORT
+            ).setTextColor(resources.getColor(R.color.white, null))
+                .setBackgroundTint(resources.getColor(R.color.red_error, null))
+                .show()
+        }
     }
 
     override fun onDestroyView() {

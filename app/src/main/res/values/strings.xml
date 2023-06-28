@@ -3,4 +3,5 @@
     <string name="contentdescription_user_avatar">User Avatar</string>
     <string name="search_hint">Search</string>
     <string name="search_minimum_one_char">Please Input Minimum 1 Character</string>
+    <string name="search_not_found">%s Not Found</string>
 </resources>
