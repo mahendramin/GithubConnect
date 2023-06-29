@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubconnect.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
@@ -62,7 +63,13 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView(searchResult: List<ItemsItem>) {
         val rvLayoutManager = LinearLayoutManager(requireContext())
-        val userAdapter = UserAdapter(searchResult)
+        val userAdapter = UserAdapter(searchResult) {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToDetailUserFragment(
+                    it.username
+                )
+            )
+        }
         binding.rvSearch.apply {
             adapter = userAdapter
             layoutManager = rvLayoutManager
