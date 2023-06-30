@@ -46,7 +46,6 @@ class DetailUserFragment : Fragment() {
         detailUserViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
     }
 
     private fun setUserData(data: DetailUserResponse) {
@@ -71,6 +70,7 @@ class DetailUserFragment : Fragment() {
             )
             Glide.with(requireContext())
                 .load(data.avatarUrl)
+                .circleCrop()
                 .into(imgAvatar)
             data.name?.let {
                 tvName.text = it

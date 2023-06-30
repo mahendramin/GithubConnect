@@ -38,10 +38,12 @@ class FollowFragment : Fragment() {
             position = it.getInt(ARG_POSITION, 0)
             username = it.getString(ARG_USERNAME, username)
         }
-        if (position == 1) {
-            followViewModel.getFollowers(username)
-        } else {
-            followViewModel.getFollowing(username)
+        if (savedInstanceState == null) {
+            if (position == 1) {
+                followViewModel.getFollowers(username)
+            } else {
+                followViewModel.getFollowing(username)
+            }
         }
 
         followViewModel.followersList.observe(viewLifecycleOwner) {
