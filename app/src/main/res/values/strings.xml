@@ -11,5 +11,8 @@
     <string name="tab_text_1">%d Followers</string>
     <string name="tab_text_2">%d Following</string>
     <string name="empty_search_result">Empty Search Result</string>
+    <string name="little_information_placeholder">A little information about %s:</string>
+    <string name="no_company_attached">Company: didn\'t attach the company he/she works at</string>
+    <string name="no_place_attached">Current Location: didn\'t attach where he/she lives in</string>
 
 </resources>

@@ -53,10 +53,10 @@ class DetailUserFragment : Fragment() {
         val listInformation = mutableListOf<String>()
         data.location?.let {
             listInformation.add(resources.getString(R.string.detail_live, data.location))
-        }
+        } ?: listInformation.add(resources.getString(R.string.no_place_attached))
         data.company?.let {
             listInformation.add(resources.getString(R.string.detail_work, data.company))
-        }
+        } ?: listInformation.add(resources.getString(R.string.no_company_attached))
         listInformation.add(
             resources.getString(
                 R.string.detail_total_public_repository,
@@ -65,6 +65,10 @@ class DetailUserFragment : Fragment() {
         )
         binding.apply {
             tvUsername.text = data.username
+            tvInformationPlaceholder.text = resources.getString(
+                R.string.little_information_placeholder,
+                data.name ?: data.username
+            )
             Glide.with(requireContext())
                 .load(data.avatarUrl)
                 .into(imgAvatar)
@@ -73,8 +77,7 @@ class DetailUserFragment : Fragment() {
             } ?: run {
                 binding.tvName.visibility = View.GONE
             }
-            tvGithubUrl.text = resources.getString(R.string.detail_github_url, data.username)
-            tvInformation.text = listInformation.joinToString()
+            tvInformation.text = listInformation.joinToString("\n")
         }
     }
 
