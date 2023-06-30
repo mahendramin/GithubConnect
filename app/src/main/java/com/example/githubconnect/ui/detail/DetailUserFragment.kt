@@ -1,4 +1,4 @@
-package com.example.githubconnect
+package com.example.githubconnect.ui.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.example.githubconnect.R
+import com.example.githubconnect.data.remote.response.DetailUserResponse
 import com.example.githubconnect.databinding.FragmentDetailUserBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

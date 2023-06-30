@@ -10,5 +10,6 @@
     <string name="detail_total_public_repository">Total public repository: %d</string>
     <string name="tab_text_1">%d Followers</string>
     <string name="tab_text_2">%d Following</string>
+    <string name="empty_search_result">Empty Search Result</string>
 
 </resources>

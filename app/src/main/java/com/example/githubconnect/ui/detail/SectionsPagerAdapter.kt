@@ -1,9 +1,10 @@
-package com.example.githubconnect
+package com.example.githubconnect.ui.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.githubconnect.ui.detail.follow.FollowFragment
 
 class SectionsPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 

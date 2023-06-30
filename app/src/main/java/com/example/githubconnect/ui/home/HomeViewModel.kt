@@ -1,9 +1,13 @@
-package com.example.githubconnect
+package com.example.githubconnect.ui.home
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubconnect.data.remote.response.ItemsItem
+import com.example.githubconnect.data.remote.response.SearchResponse
+import com.example.githubconnect.data.retrofit.ApiConfig
+import com.example.githubconnect.util.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,8 +19,8 @@ class HomeViewModel : ViewModel() {
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private var _isSearchResultEmpty = MutableLiveData<Boolean>()
-    val isSearchResultEmpty: LiveData<Boolean> = _isSearchResultEmpty
+    private var _isSearchResultEmpty = MutableLiveData<Event<Boolean>>()
+    val isSearchResultEmpty: LiveData<Event<Boolean>> = _isSearchResultEmpty
 
     fun searchUser(username: String) {
         _isLoading.value = true
@@ -31,8 +35,7 @@ class HomeViewModel : ViewModel() {
                     response.body()?.totalCount?.let {
                         if (it > 0) {
                             _searchResult.value = response.body()?.items
-                            _isSearchResultEmpty.value = false
-                        } else _isSearchResultEmpty.value = true
+                        } else _isSearchResultEmpty.value = Event(true)
                     }
                 } else {
                     Log.e(TAG, "onResponse: ${response.message()}")

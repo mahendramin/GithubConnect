@@ -1,9 +1,10 @@
-package com.example.githubconnect
+package com.example.githubconnect.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.githubconnect.data.remote.response.ItemsItem
 import com.example.githubconnect.databinding.ItemUserListBinding
 
 class UserAdapter(

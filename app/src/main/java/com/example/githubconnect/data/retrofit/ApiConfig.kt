@@ -1,5 +1,6 @@
-package com.example.githubconnect
+package com.example.githubconnect.data.retrofit
 
+import com.example.githubconnect.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

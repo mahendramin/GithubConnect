@@ -1,10 +1,11 @@
-package com.example.githubconnect
+package com.example.githubconnect.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.githubconnect.R
 import com.example.githubconnect.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

@@ -1,9 +1,11 @@
-package com.example.githubconnect
+package com.example.githubconnect.ui.detail.follow
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubconnect.data.remote.response.ItemsItem
+import com.example.githubconnect.data.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

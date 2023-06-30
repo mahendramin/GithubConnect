@@ -1,4 +1,4 @@
-package com.example.githubconnect
+package com.example.githubconnect.ui.detail.follow
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.githubconnect.ui.detail.DetailUserFragmentDirections
+import com.example.githubconnect.ui.home.UserAdapter
+import com.example.githubconnect.data.remote.response.ItemsItem
 import com.example.githubconnect.databinding.FragmentFollowBinding
 
 class FollowFragment : Fragment() {
