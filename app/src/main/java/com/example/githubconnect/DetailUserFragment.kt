@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.githubconnect.databinding.FragmentDetailUserBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserFragment : Fragment() {
 
     private var _binding: FragmentDetailUserBinding? = null
     private val binding get() = _binding!!
+
+    private var username = String()
 
     private val detailUserViewModel: DetailUserViewModel by viewModels()
 
@@ -26,7 +30,7 @@ class DetailUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val username = DetailUserFragmentArgs.fromBundle(arguments as Bundle).username
+        username = DetailUserFragmentArgs.fromBundle(arguments as Bundle).username
 
         if (savedInstanceState == null) {
             detailUserViewModel.getDetailUserResponse(username)
@@ -34,6 +38,7 @@ class DetailUserFragment : Fragment() {
 
         detailUserViewModel.detailUserResponse.observe(viewLifecycleOwner) {
             setUserData(it)
+            setFollowData(it)
         }
 
         detailUserViewModel.isLoading.observe(viewLifecycleOwner) {
@@ -45,12 +50,17 @@ class DetailUserFragment : Fragment() {
     private fun setUserData(data: DetailUserResponse) {
         val listInformation = mutableListOf<String>()
         data.location?.let {
-            listInformation.add("Tinggal di $it")
+            listInformation.add(resources.getString(R.string.detail_live, data.location))
         }
         data.company?.let {
-            listInformation.add("Kerja di $it")
+            listInformation.add(resources.getString(R.string.detail_work, data.company))
         }
-        listInformation.add("jml public repo: ${data.publicRepos}")
+        listInformation.add(
+            resources.getString(
+                R.string.detail_total_public_repository,
+                data.publicRepos
+            )
+        )
         binding.apply {
             tvUsername.text = data.username
             Glide.with(requireContext())
@@ -61,8 +71,20 @@ class DetailUserFragment : Fragment() {
             } ?: run {
                 binding.tvName.visibility = View.GONE
             }
-            tvGithubUrl.text = "https://github.com/${data.username}"
+            tvGithubUrl.text = resources.getString(R.string.detail_github_url, data.username)
             tvInformation.text = listInformation.joinToString()
+        }
+    }
+
+    private fun setFollowData(userDetail: DetailUserResponse) {
+        val tabTitlesValue = intArrayOf(userDetail.followers, userDetail.following)
+        val sectionsPagerAdapter = SectionsPagerAdapter(requireActivity())
+        sectionsPagerAdapter.username = username
+        binding.apply {
+            vpFollow.adapter = sectionsPagerAdapter
+            TabLayoutMediator(tabFollow, vpFollow) { tab, position ->
+                tab.text = resources.getString(TAB_TITLES[position], tabTitlesValue[position])
+            }.attach()
         }
     }
 
@@ -74,5 +96,10 @@ class DetailUserFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+        @StringRes
+        private val TAB_TITLES = intArrayOf(R.string.tab_text_1, R.string.tab_text_2)
     }
 }

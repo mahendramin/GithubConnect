@@ -22,5 +22,13 @@
         <argument
             android:name="username"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detailUserFragment_self"
+            app:destination="@id/detailUserFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/followFragment"
+        android:name="com.example.githubconnect.FollowFragment"
+        android:label="fragment_follow"
+        tools:layout="@layout/fragment_follow" />
 </navigation>
