@@ -10,7 +10,7 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="imgAvatar,tvUsername,tvName,tvInformationPlaceholder, tvInformation, tabFollow, vpFollow" />
+        app:constraint_referenced_ids="imgAvatar,tvUsername,tvName,tvBio, tvInformationPlaceholder, tvInformation, tabFollow, vpFollow" />
 
     <ImageView
         android:id="@+id/imgAvatar"
@@ -24,22 +24,22 @@
         tools:src="@tools:sample/avatars" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/tvName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:textColor="?android:attr/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvName"
+        app:layout_constraintBottom_toTopOf="@+id/tvUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgAvatar"
         app:layout_constraintTop_toTopOf="@id/imgAvatar"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Username" />
+        tools:text="Name" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -47,11 +47,11 @@
         app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsername"
-        tools:text="name" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        tools:text="Username" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvInformationPlaceholder"
+        android:id="@+id/tvBio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -63,15 +63,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgAvatar"
+        tools:text="Bio" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvInformationPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="8dp"
+        android:textColor="?android:attr/colorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBio"
         tools:text="A little information about this user:" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvInformation"
-        android:textSize="18sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvInformationPlaceholder"

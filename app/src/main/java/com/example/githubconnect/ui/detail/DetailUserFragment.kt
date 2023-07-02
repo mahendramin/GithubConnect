@@ -77,6 +77,11 @@ class DetailUserFragment : Fragment() {
             } ?: run {
                 binding.tvName.visibility = View.GONE
             }
+            data.bio?.let {
+                tvBio.text = it
+            } ?: run {
+                binding.tvBio.visibility = View.GONE
+            }
             tvInformation.text = listInformation.joinToString("\n")
         }
     }
