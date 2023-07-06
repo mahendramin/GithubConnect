@@ -90,6 +90,7 @@ class HomeFragment : Fragment() {
         if (isEmpty) {
             val alertBuilder = AlertDialog.Builder(requireContext()).apply {
                 setTitle(resources.getString(R.string.empty_search_result))
+                setCancelable(false)
                 setMessage("$searchInput Not Found")
                 setPositiveButton(getString(android.R.string.ok), null)
             }
