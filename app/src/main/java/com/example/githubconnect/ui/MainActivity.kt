@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,6 +15,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.githubconnect.R
 import com.example.githubconnect.databinding.ActivityMainBinding
+import com.example.githubconnect.ui.home.HomeFragmentDirections
+import com.example.githubconnect.util.SettingPreferences
+import com.example.githubconnect.util.ViewModelFactory
+import com.example.githubconnect.util.dataStore
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.settings -> {
+                        findNavController(navHostFragment.id).navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
                         true
                     }
 
@@ -51,6 +58,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        val pref = SettingPreferences.getInstance(application.dataStore)
+
+        val mainViewModel =
+            ViewModelProvider(this, ViewModelFactory(pref))[MainViewModel::class.java]
+        mainViewModel.getThemeSettings().observe(this) { isDarkModeActive ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
