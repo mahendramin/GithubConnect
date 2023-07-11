@@ -2,11 +2,7 @@ package com.example.githubconnect.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -15,7 +11,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.githubconnect.R
 import com.example.githubconnect.databinding.ActivityMainBinding
-import com.example.githubconnect.ui.home.HomeFragmentDirections
 import com.example.githubconnect.util.SettingPreferences
 import com.example.githubconnect.util.ViewModelFactory
 import com.example.githubconnect.util.dataStore
@@ -35,29 +30,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) {
-                navController.addOnDestinationChangedListener { _, destination, _ ->
-                    menu.findItem(R.id.settings).isVisible = destination.id == R.id.homeFragment
-                }
-            }
-
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.main_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.settings -> {
-                        findNavController(navHostFragment.id).navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
-                        true
-                    }
-
-                    else -> false
-                }
-            }
-        })
 
         val pref = SettingPreferences.getInstance(application.dataStore)
 
