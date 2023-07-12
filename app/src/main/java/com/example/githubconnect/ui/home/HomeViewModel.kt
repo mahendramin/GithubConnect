@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.githubconnect.data.remote.response.ItemsItem
 import com.example.githubconnect.data.remote.response.SearchResponse
 import com.example.githubconnect.data.retrofit.ApiConfig
-import com.example.githubconnect.util.Event
+import com.example.githubconnect.utils.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

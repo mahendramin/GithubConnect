@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_homeFragment_to_detailUserFragment"
             app:destination="@id/detailUserFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailUserFragment"
@@ -31,4 +37,19 @@
         android:name="com.example.githubconnect.ui.detail.follow.FollowFragment"
         android:label="fragment_follow"
         tools:layout="@layout/fragment_follow" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.githubconnect.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.githubconnect.ui.favorite.FavoriteFragment"
+        android:label="@string/title_favorite"
+        tools:layout="@layout/fragment_favorite" >
+
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailUserFragment"
+            app:destination="@id/detailUserFragment" />
+    </fragment>
 </navigation>

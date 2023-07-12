@@ -1,16 +1,25 @@
 package com.example.githubconnect.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.bumptech.glide.Glide
 import com.example.githubconnect.R
+import com.example.githubconnect.data.database.FavoriteUser
 import com.example.githubconnect.data.remote.response.DetailUserResponse
 import com.example.githubconnect.databinding.FragmentDetailUserBinding
+import com.example.githubconnect.ui.favorite.FavoriteViewModel
+import com.example.githubconnect.utils.FavoriteViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserFragment : Fragment() {
@@ -22,6 +31,12 @@ class DetailUserFragment : Fragment() {
 
     private val detailUserViewModel: DetailUserViewModel by viewModels()
 
+    private lateinit var favoriteUser: FavoriteUser
+
+    private val favoriteViewModel by viewModels<FavoriteViewModel> {
+        FavoriteViewModelFactory.getInstance((requireActivity()).application)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +47,7 @@ class DetailUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupMenu()
         username = DetailUserFragmentArgs.fromBundle(arguments as Bundle).username
 
         if (savedInstanceState == null) {
@@ -41,10 +57,29 @@ class DetailUserFragment : Fragment() {
         detailUserViewModel.detailUserResponse.observe(viewLifecycleOwner) {
             setUserData(it)
             setFollowData(it)
+            favoriteUser = FavoriteUser(it.username, it.avatarUrl, it.type)
         }
 
         detailUserViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        favoriteViewModel.getFavoriteUser(username).observe(viewLifecycleOwner) { favoriteUser ->
+            if (favoriteUser != null) {
+                binding.fabFavorite.apply {
+                    setOnClickListener { favoriteViewModel.delete(favoriteUser) }
+                    setImageResource(R.drawable.baseline_favorite_24)
+                }
+            } else {
+                binding.fabFavorite.apply {
+                    setOnClickListener {
+                        favoriteViewModel.insert(
+                            this@DetailUserFragment.favoriteUser
+                        )
+                    }
+                    setImageResource(R.drawable.baseline_favorite_border_24)
+                }
+            }
         }
     }
 
@@ -62,7 +97,7 @@ class DetailUserFragment : Fragment() {
                 data.publicRepos
             )
         )
-        binding.apply {
+        binding.personalInformation.apply {
             tvUsername.text = data.username
             tvInformationPlaceholder.text = resources.getString(
                 R.string.little_information_placeholder,
@@ -75,7 +110,12 @@ class DetailUserFragment : Fragment() {
             data.name?.let {
                 tvName.text = it
             } ?: run {
-                binding.tvName.visibility = View.GONE
+                tvName.visibility = View.GONE
+            }
+            data.bio?.let {
+                tvBio.text = it
+            } ?: run {
+                tvBio.visibility = View.GONE
             }
             tvInformation.text = listInformation.joinToString("\n")
         }
@@ -98,6 +138,39 @@ class DetailUserFragment : Fragment() {
         binding.group.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
+    private fun setupMenu() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.detail_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.share -> {
+                        shareUserInformation()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun shareUserInformation() {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                resources.getString(R.string.share_user_information, username.lowercase())
+            )
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(intent, null)
+        startActivity(shareIntent)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

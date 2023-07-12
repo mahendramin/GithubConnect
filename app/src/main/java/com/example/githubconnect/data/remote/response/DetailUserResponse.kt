@@ -41,5 +41,9 @@ data class DetailUserResponse(
     val name: String? = null,
 
     @field:SerializedName("location")
-    val location: String? = null
+    val location: String? = null,
+
+    @field:SerializedName("bio")
+    val bio: String? = null
+
 )
