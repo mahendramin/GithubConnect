@@ -10,13 +10,18 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.githubconnect.R
+import com.example.githubconnect.data.database.FavoriteUser
 import com.example.githubconnect.data.remote.response.DetailUserResponse
 import com.example.githubconnect.databinding.FragmentDetailUserBinding
+import com.example.githubconnect.ui.favorite.FavoriteViewModel
+import com.example.githubconnect.utils.FavoriteViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserFragment : Fragment() {
@@ -27,6 +32,14 @@ class DetailUserFragment : Fragment() {
     private var username = String()
 
     private val detailUserViewModel: DetailUserViewModel by viewModels()
+
+    private lateinit var favoriteViewModel: FavoriteViewModel
+
+    private lateinit var favoriteUser: FavoriteUser
+
+//    private val favoriteViewModel by viewModels<FavoriteViewModel> {
+//        FavoriteViewModelFactory.getInstance((requireActivity()).application)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +52,7 @@ class DetailUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
+        favoriteViewModel = obtainViewModel(activity as AppCompatActivity)
         username = DetailUserFragmentArgs.fromBundle(arguments as Bundle).username
 
         if (savedInstanceState == null) {
@@ -48,10 +62,29 @@ class DetailUserFragment : Fragment() {
         detailUserViewModel.detailUserResponse.observe(viewLifecycleOwner) {
             setUserData(it)
             setFollowData(it)
+            favoriteUser = FavoriteUser(it.username, it.avatarUrl, it.type)
         }
 
         detailUserViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        favoriteViewModel.getFavoriteUser(username).observe(viewLifecycleOwner) { favoriteUser ->
+            if (favoriteUser != null) {
+                binding.fabFavorite.apply {
+                    setOnClickListener { favoriteViewModel.delete(favoriteUser) }
+                    setImageResource(R.drawable.baseline_favorite_24)
+                }
+            } else {
+                binding.fabFavorite.apply {
+                    setOnClickListener {
+                        favoriteViewModel.insert(
+                            this@DetailUserFragment.favoriteUser
+                        )
+                    }
+                    setImageResource(R.drawable.baseline_favorite_border_24)
+                }
+            }
         }
     }
 
@@ -142,6 +175,11 @@ class DetailUserFragment : Fragment() {
 
         val shareIntent = Intent.createChooser(intent, null)
         startActivity(shareIntent)
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
+        val factory = FavoriteViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[FavoriteViewModel::class.java]
     }
 
     override fun onDestroyView() {

@@ -1,4 +1,4 @@
-package com.example.githubconnect.util
+package com.example.githubconnect.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -11,9 +11,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.githubconnect.R
 import com.example.githubconnect.databinding.ActivityMainBinding
-import com.example.githubconnect.util.SettingPreferences
-import com.example.githubconnect.util.ViewModelFactory
-import com.example.githubconnect.util.dataStore
+import com.example.githubconnect.utils.SettingPreferences
+import com.example.githubconnect.utils.ViewModelFactory
+import com.example.githubconnect.utils.dataStore
 
 class MainActivity : AppCompatActivity() {
 

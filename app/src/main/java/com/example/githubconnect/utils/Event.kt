@@ -1,4 +1,4 @@
-package com.example.githubconnect.util
+package com.example.githubconnect.utils
 
 open class Event<out T>(private val content: T) {
 

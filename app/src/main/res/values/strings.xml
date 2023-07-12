@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GithubConnect</string>
     <string name="contentdescription_user_avatar">User Avatar</string>
+    <string name="contentdescription_fab">Favorite Floating Action Button</string>
     <string name="search_hint">Search</string>
     <string name="search_minimum_one_char">Please Input Minimum 1 Character</string>
     <string name="search_not_found">%s Not Found</string>
@@ -18,5 +19,5 @@
     <string name="option_dark_theme">Dark Theme</string>
     <string name="title_share">Share</string>
     <string name="share_user_information">Visit https://github.com/%s to get more information about User</string>
-
+    <string name="title_favorite">Favorite</string>
 </resources>

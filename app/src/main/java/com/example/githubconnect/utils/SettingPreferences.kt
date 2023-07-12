@@ -1,4 +1,4 @@
-package com.example.githubconnect.util
+package com.example.githubconnect.utils
 
 import android.content.Context
 import androidx.datastore.core.DataStore

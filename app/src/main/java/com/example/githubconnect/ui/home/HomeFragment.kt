@@ -116,7 +116,10 @@ class HomeFragment : Fragment() {
                         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
                         true
                     }
-
+                    R.id.favorite -> {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoriteFragment())
+                        true
+                    }
                     else -> false
                 }
             }

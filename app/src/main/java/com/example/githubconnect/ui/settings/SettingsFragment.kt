@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.example.githubconnect.databinding.FragmentSettingsBinding
 import com.example.githubconnect.ui.MainViewModel
-import com.example.githubconnect.util.SettingPreferences
-import com.example.githubconnect.util.ViewModelFactory
-import com.example.githubconnect.util.dataStore
+import com.example.githubconnect.utils.SettingPreferences
+import com.example.githubconnect.utils.ViewModelFactory
+import com.example.githubconnect.utils.dataStore
 
 class SettingsFragment : Fragment() {
 

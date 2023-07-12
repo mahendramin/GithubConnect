@@ -10,7 +10,7 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="personalInformationScrollView, tabFollow, vpFollow" />
+        app:constraint_referenced_ids="personalInformationScrollView, tabFollow, vpFollow, fabFavorite" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -53,6 +53,16 @@
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/tabFollow"
         tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/contentdescription_fab"
+        android:src="@drawable/baseline_favorite_border_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
