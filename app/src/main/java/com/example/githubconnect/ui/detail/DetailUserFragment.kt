@@ -69,7 +69,7 @@ class DetailUserFragment : Fragment() {
                 data.publicRepos
             )
         )
-        binding.apply {
+        binding.personalInformation.apply {
             tvUsername.text = data.username
             tvInformationPlaceholder.text = resources.getString(
                 R.string.little_information_placeholder,
@@ -82,12 +82,12 @@ class DetailUserFragment : Fragment() {
             data.name?.let {
                 tvName.text = it
             } ?: run {
-                binding.tvName.visibility = View.GONE
+                tvName.visibility = View.GONE
             }
             data.bio?.let {
                 tvBio.text = it
             } ?: run {
-                binding.tvBio.visibility = View.GONE
+                tvBio.visibility = View.GONE
             }
             tvInformation.text = listInformation.joinToString("\n")
         }
@@ -133,7 +133,10 @@ class DetailUserFragment : Fragment() {
     private fun shareUserInformation() {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, resources.getString(R.string.share_user_information, username.lowercase()))
+            putExtra(
+                Intent.EXTRA_TEXT,
+                resources.getString(R.string.share_user_information, username.lowercase())
+            )
             type = "text/plain"
         }
 
