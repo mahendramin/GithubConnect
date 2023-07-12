@@ -10,11 +10,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.githubconnect.R
 import com.example.githubconnect.data.database.FavoriteUser
@@ -33,13 +31,11 @@ class DetailUserFragment : Fragment() {
 
     private val detailUserViewModel: DetailUserViewModel by viewModels()
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
-
     private lateinit var favoriteUser: FavoriteUser
 
-//    private val favoriteViewModel by viewModels<FavoriteViewModel> {
-//        FavoriteViewModelFactory.getInstance((requireActivity()).application)
-//    }
+    private val favoriteViewModel by viewModels<FavoriteViewModel> {
+        FavoriteViewModelFactory.getInstance((requireActivity()).application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +48,6 @@ class DetailUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
-        favoriteViewModel = obtainViewModel(activity as AppCompatActivity)
         username = DetailUserFragmentArgs.fromBundle(arguments as Bundle).username
 
         if (savedInstanceState == null) {
@@ -176,12 +171,6 @@ class DetailUserFragment : Fragment() {
         val shareIntent = Intent.createChooser(intent, null)
         startActivity(shareIntent)
     }
-
-    private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
-        val factory = FavoriteViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[FavoriteViewModel::class.java]
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubconnect.databinding.FragmentFavoriteBinding
@@ -19,6 +18,9 @@ class FavoriteFragment : Fragment() {
 
     private lateinit var favoriteAdapter: FavoriteAdapter
 
+    private val favoriteViewModel by viewModels<FavoriteViewModel> {
+        FavoriteViewModelFactory.getInstance((requireActivity()).application)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,8 +38,6 @@ class FavoriteFragment : Fragment() {
                 )
             )
         }
-        val favoriteViewModel = obtainViewModel(activity as AppCompatActivity)
-
         favoriteViewModel.getAllListFavoriteUser().observe(viewLifecycleOwner) {
             if (it != null) {
                 favoriteAdapter.setListFavoriteUser(it)
@@ -52,11 +52,6 @@ class FavoriteFragment : Fragment() {
             adapter = favoriteAdapter
             layoutManager = rvLayoutManager
         }
-    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
-        val factory = FavoriteViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[FavoriteViewModel::class.java]
     }
 
     override fun onDestroyView() {
